@@ -98,6 +98,7 @@ st.set_page_config(
 )
 
 with st.sidebar:
+    st.info("**作者:** [HankLin](https://www.hanksvba.com)")
     groq_api_key=st.text_input("Groq API Key", type="password")
     st.markdown("[GroqAPI金鑰取得教學](https://www.hanksvba.com/posts/3510612144/)")
 
@@ -107,7 +108,7 @@ else:
     try:
         client = Groq(api_key=os.getenv("GROQ_API_KEY"))
     except Exception as e:
-        st.error("請輸入 Groq API Key!")
+        st.warning("請先取得 Groq API Key!",icon="⚠️")
         st.stop()
 
 def get_transcription(audio_file):
@@ -261,7 +262,7 @@ with col1:
 # Example reports
 with col2:
 
-    st.subheader(":book: 契約項目")
+    st.subheader("📖 契約項目")
     st.dataframe(CONTRACT_ITEMS,
     use_container_width=True,
     hide_index=True,
