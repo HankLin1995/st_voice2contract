@@ -104,7 +104,11 @@ with st.sidebar:
 if groq_api_key:
     client = Groq(api_key=groq_api_key)
 else:
-    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    try:
+        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    except Exception as e:
+        st.error("請輸入 Groq API Key!")
+        st.stop()
 
 def get_transcription(audio_file):
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_file:
@@ -182,9 +186,9 @@ def process_civil_engineering_prompt(report_text):
         return None
 
 # Check for API key
-if not os.getenv("GROQ_API_KEY"):
-    st.warning("⚠️ Groq API key not found. Please add your API key to the .env file.")
-    st.stop()
+# if not os.getenv("GROQ_API_KEY"):
+#     st.warning("⚠️ Groq API key not found. Please add your API key to the .env file.")
+#     st.stop()
 
 st.title("🤖 契約項目數量填寫")
 st.markdown("---")
